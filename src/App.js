@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import CardList from './CardList';
 import SearchBox from './SearchBox';
 import './App.css';
+import Scroll from './Scroll';
 
 // STATE >> props
 
@@ -21,7 +22,7 @@ class App extends Component {
         fetch('https://jsonplaceholder.typicode.com/users').then(response=> {
             return response.json();
         })
-        .then(users => this.setState({ robots: users}));
+        .then(users => {this.setState({ robots: users})});
         // don't need to use {} if one return statement.
         // need to use {} and return statement if multiple lines
     }
@@ -40,7 +41,7 @@ class App extends Component {
             }
         );
 
-        if (this.state.robots.length = 0) {
+        if (this.state.robots.length === 0) {
             return <h1>Loading...</h1>
         } else {
             return (
@@ -48,7 +49,9 @@ class App extends Component {
                     <div className='tc'>
                         <h1 className='f1'>RoboFriends</h1>
                         <SearchBox searchChange={this.onSearchChange}/>
-                        <CardList robots={filteredRobots}/>
+                        <Scroll>
+                            <CardList robots={filteredRobots}/>
+                        </Scroll>
                     </div>
                 </>
             );
