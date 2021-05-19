@@ -10,7 +10,7 @@ import './index.css';
 // import CardList from './CardList';
 import 'tachyons';
 // import { robots } from './robots';
-import App from './App';
+import App from './components/App';
 // ReactDOM.render(
 //   <React.StrictMode>
 //     <App />
