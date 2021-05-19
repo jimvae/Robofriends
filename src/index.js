@@ -7,10 +7,10 @@ import './index.css';
 // import reportWebVitals from './reportWebVitals';
 // import Hello from './Hello';
 // import Card from './Card';
-import CardList from './CardList';
+// import CardList from './CardList';
 import 'tachyons';
-import { robots } from './robots';
-
+// import { robots } from './robots';
+import App from './App';
 // ReactDOM.render(
 //   <React.StrictMode>
 //     <App />
@@ -18,8 +18,13 @@ import { robots } from './robots';
 //   document.getElementById('root')
 // );
 
+// ReactDOM.render(
+// <CardList robots={robots} />,
+//   document.getElementById('root')
+// );
+
 ReactDOM.render(
-<CardList robots={robots} />,
+<App />,
   document.getElementById('root')
 );
 
