@@ -1,30 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { Provider, connect } from 'react-redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 // ./ means it is in the same directory
-// import App from './App';
-// if you never put .something, it assumes that it is JS
-// import reportWebVitals from './reportWebVitals';
-// import Hello from './Hello';
-// import Card from './Card';
-// import CardList from './CardList';
-import 'tachyons';
-// import { robots } from './robots';
-import App from './components/App';
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );
+import thunkMiddleware from 'redux-thunk';
 
-// ReactDOM.render(
-// <CardList robots={robots} />,
-//   document.getElementById('root')
-// );
+import 'tachyons';
+import App from './components/App';
+import { searchRobots, requestRobots } from './reducers';
+
+const rootReducer = combineReducers({ searchRobots, requestRobots});
+// combine all the reducers
+
+// create the store from the reducer(search Robots)
+// you can add more middleware here (ordered by parameter)
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 ReactDOM.render(
-<App />,
+  // state is passed down to every single components of App
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
 

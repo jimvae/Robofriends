@@ -5,59 +5,47 @@ import './App.css';
 import Scroll from '../containers/Scroll';
 import ErrorBoundary from './ErrorBoundary.js';
 
-// STATE >> props
+// actions
+import { setSearchField, requestRobots } from '../actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 function App () {
-    // constructor() {
-    //     super();
-    //     // something that can change, lives in the parent
-    //     this.state = {
-    //         robots: [],
-    //         searchfield: ''
-    //     }
-    // }
 
-    const [robots, setRobots] = useState([]);
-    // [] is the initial state of robots
-    const [searchfield, setSearchfield] = useState('');
+    const dispatch = useDispatch();
 
-    // life cycle function / in built function so do not need arrow keys
-    // componentDidMount() {
-    //     fetch('https://jsonplaceholder.typicode.com/users').then(response=> {
-    //         return response.json();
-    //     })
-    //     .then(users => {this.setState({ robots: users})});
-    //     // don't need to use {} if one return statement.
-    //     // need to use {} and return statement if multiple lines
-    // }
+    // the states
 
-    // useeffect for side effects
-    // gets run every time the function App is being run
-    useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/users').then(response=> {
-            return response.json();
-        })
-        .then(users => setRobots(users));
-    }, [searchfield]) //only run if searchfield change
-    // THE SECOND PARAMETER DETERMINES WHEN THE USEEFFECT RENDERS
-    // if search field change then re render,
-    // or 
-// }, []) ==> this array will never change, so same effect as oncomponentdidmount!
+    const { searchField } = useSelector(
+        (state) => state.searchRobots
+    );
+    
+    const { robots, isPending, error } = useSelector(
+        (state) => state.requestRobots
+    );
 
-    // custom function, so need to use arrows functions
     const onSearchChange = (event) => {
         // setState is a standard synthax
-        setSearchfield(event.target.value)
+        dispatch(setSearchField(event.target.value));
     }
+
+    const onRequestRobots = () => {
+        dispatch(requestRobots())
+    }
+
+    // Replaces componentDidMount
+    useEffect(() => {
+        onRequestRobots()
+    }, [])
+
 
     const filteredRobots = robots.filter(
         robot => {
-            return robot.name.toLowerCase().includes(searchfield.toLowerCase());
+            return robot.name.toLowerCase().includes(searchField.toLowerCase());
         }
     );
 
-    if (!robots.length) {
+    if (isPending) {
         return <h1>Loading...</h1>
     } else {
         return (
@@ -76,5 +64,7 @@ function App () {
     }
 }
 
+// can name the parameters but can use this convention
+export default App;
 
-export default App
+// connect is a higher order function, takes in a function and returns a function

@@ -1,0 +1,20 @@
+React Router
+
+Utility Libraries:
+Ramda
+Lodash
+
+Styling:
+Glamorous
+Css-modules
+
+Gatsby.js
+Next.js (server side)
+
+UI
+MaterialUI
+SemanticUI
+
+ReduxSage ->Asynchronous, reacthunk on steroids
+
+immutable JS
