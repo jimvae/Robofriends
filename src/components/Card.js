@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-
+import './Card.css'
 
 // const Card = (props) => {
 //     return (
@@ -18,11 +18,14 @@ import React, { Fragment } from 'react';
 // or
 
 
-const Card = ({ id, name, email}) => {
+const Card = ({ id, name, email, randomize, creatureType}) => {
+
     return (
         <Fragment>
-            <div className='tc bg-light-green dib hr3 pa3 ma2 grow bw2 shadow-5'>
-                <img alt='robot' src={`https://robohash.org/${id}?200x200`}/>
+            <div 
+                className='tc bg-light-green dib hr3 pa3 ma2 grow bw2 shadow-5'
+                >
+                <img alt='robot' src={`https://robohash.org/${id + creatureType}`}/>
                 <div>
                     <h2>{name}</h2>
                     <p>{email}</p>

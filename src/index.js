@@ -7,10 +7,10 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 import 'tachyons';
-import App from './components/App';
-import { searchRobots, requestRobots } from './reducers';
+import App from './containers/App';
+import { searchRobots, requestRobots, changeRobots } from './redux/reducers';
 
-const rootReducer = combineReducers({ searchRobots, requestRobots});
+const rootReducer = combineReducers({ searchRobots, requestRobots, changeRobots});
 // combine all the reducers
 
 // create the store from the reducer(search Robots)

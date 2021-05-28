@@ -2,7 +2,8 @@ import {
     CHANGE_SEARCH_FIELD, 
     REQUEST_ROBOTS_PENDING,
     REQUEST_ROBOTS_SUCCESS,
-    REQUEST_ROBOTS_FAILED
+    REQUEST_ROBOTS_FAILED,
+    CHANGE_ROBOTS
  } from './constants';
 
 const initialState = {
@@ -47,5 +48,18 @@ export const requestRobots = (state=initialStateRobots, action={}) => {
             return Object.assign({}, state, { error: action.payload, isPending: false})
         default:
             return state;
+    }
+}
+
+const initialType = {
+    creatureType: 'android'
+}
+
+export const changeRobots = (state=initialType, action={}) => {
+    switch (action.type) {
+        case CHANGE_ROBOTS:
+            return Object.assign({}, state, {creatureType: action.payload});
+        default:
+            return state
     }
 }

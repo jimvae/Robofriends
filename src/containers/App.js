@@ -1,12 +1,13 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import CardList from '../containers/CardList';
-import SearchBox from '../containers/SearchBox';
+import React, { useEffect } from 'react';
+import CardList from '../components/CardList';
+import SearchBox from '../components/SearchBox';
 import './App.css';
-import Scroll from '../containers/Scroll';
+import Scroll from '../components/Scroll';
 import ErrorBoundary from './ErrorBoundary.js';
+import MutateButton from '../components/MutateButton';
 
 // actions
-import { setSearchField, requestRobots } from '../actions';
+import { setSearchField, requestRobots, changeRobots } from '../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -24,14 +25,40 @@ function App () {
         (state) => state.requestRobots
     );
 
+    const { creatureType } = useSelector(
+        (state) => state.changeRobots
+    )
+
+    const getcreatureString = (creature) => {
+        switch (creature) {
+            case "alien":
+                return '?set=set2';
+            case "robot":
+                return '?set=set3';
+            case "cat":
+                return '?set=set4';
+            case "human":
+                return '?set=set5';
+            default:
+                return '';
+        }
+    } 
+
     const onSearchChange = (event) => {
-        // setState is a standard synthax
         dispatch(setSearchField(event.target.value));
     }
 
     const onRequestRobots = () => {
         dispatch(requestRobots())
     }
+
+    const onChangeRobots = () => {
+        dispatch(changeRobots());
+    }
+
+    // const randomize = (event) => {
+    //     console.log(event);
+    // }
 
     // Replaces componentDidMount
     useEffect(() => {
@@ -49,17 +76,18 @@ function App () {
         return <h1>Loading...</h1>
     } else {
         return (
-            <>
                 <div className='tc'>
-                    <h1 className='f1'>RoboFriends</h1>
+                    <h1 className='f1'>{`${creatureType}Friends`}</h1>
+                    <MutateButton changeRobots={onChangeRobots} />
                     <SearchBox searchChange={onSearchChange}/>
                     <Scroll>
                         <ErrorBoundary>
-                            <CardList robots={filteredRobots}/>
+                            <CardList 
+                                robots={filteredRobots}
+                                creatureType={getcreatureString(creatureType)}/>
                         </ErrorBoundary>
                     </Scroll>
                 </div>
-            </>
         );
     }
 }
